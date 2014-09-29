@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Навчалка</string>
+    <string name="hello_world">Привіт світ!</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="title_activity_my_activity1">Життєві цикли Актівіті</string>
+    <string name="title_activity_my_activity2">Визначник Жестів || Намір</string>
+    <string name="Third_lesson_activity_title">Лист || Свої Ячейки и ресурси</string>
+
+    <string name="button_1_text">Запустити Друге Актівіті </string>
+    <string name="button_2_text">Запуск Актівіті з третього Урока</string>
+
+    <string name="item_string_name">Імя:</string>
+    <string name="item_string_second_name">Прізвище:</string>
+    <string name="item_string_phone_number">Номер телефону:</string>
+    <string name="item_string_email">Email:</string>
+    <string name="item_string_age">Вік:</string>
+    <string name="see_button">Показати</string>
+
+</resources>

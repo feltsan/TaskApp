@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="@string/item_string_name"
+        android:padding="5dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/sname"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_width="wrap_content"
+        android:textSize="14dp"
+        android:layout_height="wrap_content"
+        android:text="@string/item_string_second_name"
+        android:layout_below="@+id/name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="5dp">
+    </TextView>
+
+
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="10dp"
+        android:textSize="14dp"
+        android:id="@+id/button_on_LW"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_alignBottom="@id/second_name_text_view"
+        android:text="@string/see_button"
+         />
+    <TextView
+        android:gravity="center"
+        android:id="@+id/first_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/item_string_name"
+        android:padding="5dp">
+    </TextView>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/second_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="@string/item_string_second_name"
+        android:layout_below="@id/first_name_text_view"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        >
+
+    </TextView>
+
+
+</RelativeLayout>
+
