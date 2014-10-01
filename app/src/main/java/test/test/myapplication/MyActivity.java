@@ -17,8 +17,8 @@ public class MyActivity extends Activity {
             Intent intent;
             switch (v.getId()) {
                 case R.id.btn_1:
-                    intent = new Intent(MyActivity.this, Activity2.class);
-                    intent.putExtra("ttt", "fff");
+                    intent = new Intent(MyActivity.this, AsyncActivity.class);
+                    //intent.putExtra("ttt", "fff");
                     startActivity(intent);
                     break;
                 case R.id.btn_2:

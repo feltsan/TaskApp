@@ -81,7 +81,7 @@ public class ThirdLessonActivity extends Activity {
 
         item = new HashMap<String, Student>();
 
-        item.put("student",new Student("Олександр", "Мікуланінець", "66666666", "hhy@gmail", "23"));
+        item.put("student",new Student("Олександр", "Мікуланінець", "66666666", "hhy@gmail", "22"));
         student.add(item);
 
         item = new HashMap<String, Student>();
@@ -91,17 +91,17 @@ public class ThirdLessonActivity extends Activity {
 
         item = new HashMap<String, Student>();
 
-        item.put("student",new Student("Михайло", "Рогач", "11111111111", "f.i@gmail", "23"));
+        item.put("student",new Student("Михайло", "Рогач", "222222222", "f.i@gmail", "21"));
         student.add(item);
 
         item = new HashMap<String, Student>();
 
-        item.put("student",new Student("Александр", "Миченко", "11111111111", "f.i@gmail", "23"));
+        item.put("student",new Student("Александр", "Миченко", "44444444444", "f.i@gmail", "23"));
         student.add(item);
 
         item = new HashMap<String, Student>();
 
-        item.put("student",new Student("Олег", "Магобей", "11111111111", "f.i@gmail", "23"));
+        item.put("student",new Student("Олег", "Магобей", "5555555", "f.i@gmail", "18"));
         student.add(item);
 
         item = new HashMap<String, Student>();

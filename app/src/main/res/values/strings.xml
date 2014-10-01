@@ -16,6 +16,6 @@
     <string name="item_string_age">Age:</string>
     <string name="see_button">See</string>
     <string name="title_activity_about_student">Info</string>
-
+    <string name="title_activity_async">AsyncActivity</string>
 
 </resources>
