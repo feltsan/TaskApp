@@ -6,95 +6,36 @@
     android:layout_margin="@dimen/activity_horizontal_margin"
     >
 
-    <TextView
-        android:id="@+id/first_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_alignParentLeft="true"
-        android:text="@string/item_string_name">
-    </TextView>
-
-    <TextView
-        android:id="@+id/second_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/item_string_second_name"
-        android:layout_toEndOf="@+id/first_name_text_view"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/first_name_text_view">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/ic_launcher">
 
+        </ImageView>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true">
     </TextView>
-
     <TextView
-        android:id="@+id/tell_number"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/item_string_phone_number"
-        android:layout_below="@+id/first_name_text_view">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/item_string_email"
-        android:layout_below="@+id/tell_number"
-        >
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/item_string_age"
-        android:layout_below="@+id/email"
-       >
-s
-    </TextView>
-
-    <TextView
-        android:id="@+id/tell_number_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/item_string_phone_number"
-        android:layout_toRightOf="@+id/tell_number"
-        android:layout_alignTop="@+id/tell_number">
-
-
-
-</TextView>
-
-    <TextView
-        android:id="@+id/email_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/item_string_email"
-        android:layout_toRightOf="@+id/email"
-        android:layout_below="@+id/tell_number">
-
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/age_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/item_string_age"
-        android:layout_toRightOf="@+id/age"
-        android:layout_below="@+id/email"
-
-        >
-
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:text=""
+        android:layout_below="@id/name"
+        android:layout_centerHorizontal="true">
     </TextView>
 
 </RelativeLayout>

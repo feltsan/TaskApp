@@ -2,63 +2,83 @@ package test.test.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.github.kevinsawicki.http.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+
+import test.test.myapplication.supp.ImageLoader;
 
 
 public class AboutStudentActivity extends Activity {
+    String name;
+    String text;
+    String image;
+    ImageLoader imageLoader = new ImageLoader(this);
+
+    TextView tvText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_student);
-
-        String name = "";
-        String sname = "";
-        String tell = "";
-        String email = "";
-        String age = "";
+        setContentView(R.layout.about_student);
 
         Intent intent = getIntent();
-        if (null != intent){
-                name = intent.getStringExtra(ThirdLessonActivity.KEY_NAME);
-                sname = intent.getStringExtra(ThirdLessonActivity.KEY_SNAME);
-                tell = intent.getStringExtra(ThirdLessonActivity.KEY_TELL);
-                email = intent.getStringExtra(ThirdLessonActivity.KEY_EMAIL);
-                age = intent.getStringExtra(ThirdLessonActivity.KEY_AGE);
+
+        name = intent.getStringExtra("name");
+        image = intent.getStringExtra("image");
+
+
+        TextView tvFName = (TextView) findViewById(R.id.name);
+        tvText = (TextView) findViewById(R.id.text);
+        ImageView img = (ImageView) findViewById(R.id.imageView);
+         AsyncJSON asyncJSON = new AsyncJSON();
+        asyncJSON.execute();
+
+
+            tvFName.setText(name);
+
+            imageLoader.DisplayImage(image, img);
+
         }
-        TextView tvFName = (TextView) findViewById(R.id.first_name_text_view);
-        TextView tvSName = (TextView) findViewById(R.id.second_name_text_view);
-        TextView tvTell = (TextView) findViewById(R.id.tell_number_text_view);
-        TextView tvEmail = (TextView) findViewById(R.id.email_text_view);
-        TextView tvAge = (TextView) findViewById(R.id.age_text_view);
-
-        tvFName.setText(name);
-        tvSName.setText(sname);
-        tvTell.setText(tell);
-        tvEmail.setText(email);
-        tvAge.setText(age);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.about_student, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    private class AsyncJSON extends AsyncTask<Object, Long, JSONObject>{
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
         }
-        return super.onOptionsItemSelected(item);
+
+
+
+        @Override
+        protected JSONObject doInBackground(Object[] params) {
+            JSONObject jsonArray = new JSONObject();
+            HttpRequest request = HttpRequest.get("http://dev.tapptic.com/test/json.php?name="+name);
+            if (request.code() == 200){
+                String response = request.body();
+                try {
+                    jsonArray = new JSONObject(response);
+                    text = jsonArray.getString("text");
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+            return jsonArray;
+
+        }
+        protected void onPostExecute(JSONObject  result){
+            super.onPostExecute(result);
+                tvText.setText(text);
+        }
+
     }
-}
+
+ }

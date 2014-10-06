@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class AsyncActivity extends Activity {
@@ -22,8 +23,8 @@ public class AsyncActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_async);
-        imageView = (ImageView) findViewById(R.id.image_view);
-        imageView.setOnClickListener(new View.OnClickListener(){
+        imageView = (ImageView) findViewById(R.id.src_image_view);
+        imageView. setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 loadWithPicasso();
@@ -49,7 +50,7 @@ public class AsyncActivity extends Activity {
             .into(imageView);
     }
 
-   private class AsyncTestTask extends AsyncTask<Object, Long, JSONArray>{
+   private class AsyncTestTask extends AsyncTask<Object, Long, JSONObject>{
        @Override
        protected void onPreExecute(){
            super.onPreExecute();
@@ -58,13 +59,13 @@ public class AsyncActivity extends Activity {
 
 
        @Override
-       protected JSONArray doInBackground(Object[] params) {
-           JSONArray jsonArray = new JSONArray();
-           HttpRequest request = HttpRequest.get("http://dev.tapptic.com/test/json.php");
+       protected JSONObject doInBackground(Object[] params) {
+           JSONObject jsonArray = new JSONObject();
+           HttpRequest request = HttpRequest.get("http://dev.tapptic.com/test/json.php?name=10");
            if (request.code() == 200){
                String response = request.body();
             try {
-                jsonArray = new JSONArray(response);
+                jsonArray = new JSONObject(response);
             } catch (JSONException e){
                 e.printStackTrace();
             }
@@ -73,7 +74,7 @@ public class AsyncActivity extends Activity {
            }
            return jsonArray;
    }
-       protected void onPostExecute(JSONArray result){
+       protected void onPostExecute(JSONObject  result){
            super.onPostExecute(result);
            Log.v("Feltsan", result.toString());
        }

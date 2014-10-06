@@ -1,127 +1,91 @@
 package test.test.myapplication;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.view.View.OnClickListener;
+//import com.github.kevinsawicki.http.HttpRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import test.test.myapplication.supp.JSONFunctions;
+import test.test.myapplication.supp.ListViewAdapter;
 import test.test.myapplication.supp.Student;
-import test.test.myapplication.supp.StudentAdapter;
 
 /**
  * Created by BruSD on 9/23/2014.
  */
 public class ThirdLessonActivity extends Activity {
+    private JSONObject jsonObject;
+    private JSONArray jsonArray;
     private ListView listView;
-    private Button button1;
-    private ArrayList<HashMap<String, Student>> student = new ArrayList<HashMap<String, Student>>();
-    private StudentAdapter studentAdapter;
-
-
+    private ArrayList<HashMap<String,String>> arrayList;
+    private ListViewAdapter adapter;
+    ProgressDialog mProgressDialog;
     public static final String KEY_NAME = "name";
     public static final String KEY_SNAME = "sname";
-    public static final String KEY_TELL = "tell";
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_AGE = "age";
+    public static final String KEY_IMAGE = "image";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_third_lesson_layout);
-        listView = (ListView) findViewById(R.id.custom_items_list_view);
-        generateStudentList();
+        setContentView(R.layout.listview_main);
+
+        new DownloadJSON().execute();
 
     }
 
+    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            mProgressDialog = new ProgressDialog(ThirdLessonActivity.this);
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
+        }
 
-        studentAdapter = new StudentAdapter(this, student, R.layout.item_list_view_layout, null, null);
-        listView.setAdapter(studentAdapter);
+        @Override
+        protected Void doInBackground(Void... params) {
+            arrayList = new ArrayList<HashMap<String, String>>();
+            jsonArray = JSONFunctions.getJSONfromURL("http://dev.tapptic.com/test/json.php");
 
+            try {
+                    for (int i = 0; i<jsonArray.length(); i++){
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    jsonObject = jsonArray.getJSONObject(i);
+                    map.put("name", jsonObject.getString("name"));
+                    map.put("image", jsonObject.getString("image"));
+                    arrayList.add(map);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                }
 
-            @Override
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            }catch (JSONException e ){
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
             }
-        });
-
-
-    }
-
-
-    private void generateStudentList() {
-
-
-        HashMap<String, Student> item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Юлія", "Горкій", "99999", "my@gmail", "24"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Михайло", "Тромбола", "777777", "sy@gmail", "23"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Олександр", "Мікуланінець", "66666666", "hhy@gmail", "22"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Іван", "Фельцан", "11111111111", "f.i@gmail", "23"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Михайло", "Рогач", "222222222", "f.i@gmail", "21"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Александр", "Миченко", "44444444444", "f.i@gmail", "23"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Олег", "Магобей", "5555555", "f.i@gmail", "18"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Діана", "Ручкайте", "11111111111", "f.i@gmail", "23"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Саша", "Курта", "11111111111", "f.i@gmail", "23"));
-        student.add(item);
-
-        item = new HashMap<String, Student>();
-
-        item.put("student",new Student("Сергей", "Грищук", "11111111111", "f.i@gmail", "23"));
-        student.add(item);
-
+            return null;
+        }
+        protected void onPostExecute(Void args){
+            listView = (ListView) findViewById(R.id.listview);
+            adapter = new ListViewAdapter(ThirdLessonActivity.this, arrayList);
+            listView.setAdapter(adapter);
+            mProgressDialog.dismiss();
+        }
 
     }
-
 
 }
 
