@@ -2,6 +2,9 @@ package test.test.myapplication;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +24,12 @@ import org.json.JSONObject;
 import test.test.myapplication.supp.JSONFunctions;
 import test.test.myapplication.supp.ListViewAdapter;
 import test.test.myapplication.supp.Student;
+import test.test.myapplication.supp.TaskDataBase;
 
 /**
  * Created by BruSD on 9/23/2014.
  */
+
 public class ThirdLessonActivity extends Activity {
     private JSONObject jsonObject;
     private JSONArray jsonArray;
@@ -32,6 +37,9 @@ public class ThirdLessonActivity extends Activity {
     private ArrayList<HashMap<String,String>> arrayList;
     private ListViewAdapter adapter;
     ProgressDialog mProgressDialog;
+    TaskDataBase dbHelper;
+    SQLiteDatabase db;
+
     public static final String KEY_NAME = "name";
     public static final String KEY_SNAME = "sname";
     public static final String KEY_IMAGE = "image";
@@ -43,6 +51,9 @@ public class ThirdLessonActivity extends Activity {
         setContentView(R.layout.listview_main);
 
         new DownloadJSON().execute();
+
+        dbHelper = new TaskDataBase(this);
+        db = dbHelper.getWritableDatabase();
 
     }
 
@@ -65,10 +76,18 @@ public class ThirdLessonActivity extends Activity {
             try {
                     for (int i = 0; i<jsonArray.length(); i++){
                     HashMap<String, String> map = new HashMap<String, String>();
+                    ContentValues cv = new ContentValues();
                     jsonObject = jsonArray.getJSONObject(i);
                     map.put("name", jsonObject.getString("name"));
+                    cv.put(TaskDataBase.NAME, jsonObject.getString("name"));
                     map.put("image", jsonObject.getString("image"));
-                    arrayList.add(map);
+                    cv.put(TaskDataBase.SMALL_IMAGE, jsonObject.getString("image"));
+                    cv.put(TaskDataBase.BIG_IMAGE, jsonObject.getString("image"));
+                        db.insert(TaskDataBase.TABLE_NAME, null, cv);
+
+
+
+                        arrayList.add(map);
 
                 }
 
@@ -79,13 +98,25 @@ public class ThirdLessonActivity extends Activity {
             return null;
         }
         protected void onPostExecute(Void args){
+            Cursor c = db.query(TaskDataBase.TABLE_NAME, new String[]{TaskDataBase.UID, TaskDataBase.NAME,
+                    TaskDataBase.TEXT, TaskDataBase.SMALL_IMAGE, TaskDataBase.BIG_IMAGE}, null, null, null, null, null);
+            while (c.moveToNext()) {
+
+                Log.d("myLogs", "ID = " + c.getString(c.getColumnIndex(TaskDataBase.UID)) + ", name = "
+                        + c.getString(c.getColumnIndex(TaskDataBase.NAME)) + ", text = " +
+                        c.getString(c.getColumnIndex(TaskDataBase.TEXT))
+                        + ", s_img = " + c.getString(c.getColumnIndex(TaskDataBase.SMALL_IMAGE)) +
+                        ", b_img = " + c.getString(c.getColumnIndex(TaskDataBase.BIG_IMAGE)));
+            }
+            c.close();
+
             listView = (ListView) findViewById(R.id.listview);
             adapter = new ListViewAdapter(ThirdLessonActivity.this, arrayList);
             listView.setAdapter(adapter);
             mProgressDialog.dismiss();
+
         }
 
     }
 
 }
-

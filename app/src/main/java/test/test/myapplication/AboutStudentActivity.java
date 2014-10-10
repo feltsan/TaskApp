@@ -21,6 +21,7 @@ public class AboutStudentActivity extends Activity {
     String name;
     String text;
     String image;
+    ImageView img;
     ImageLoader imageLoader = new ImageLoader(this);
 
     TextView tvText;
@@ -34,21 +35,20 @@ public class AboutStudentActivity extends Activity {
         Intent intent = getIntent();
 
         name = intent.getStringExtra("name");
-        image = intent.getStringExtra("image");
+       // image = intent.getStringExtra("image");
 
 
         TextView tvFName = (TextView) findViewById(R.id.name);
         tvText = (TextView) findViewById(R.id.text);
-        ImageView img = (ImageView) findViewById(R.id.imageView);
-         AsyncJSON asyncJSON = new AsyncJSON();
+        img = (ImageView) findViewById(R.id.imageView);
+        AsyncJSON asyncJSON = new AsyncJSON();
         asyncJSON.execute();
 
 
-            tvFName.setText(name);
+        tvFName.setText(name);
 
-            imageLoader.DisplayImage(image, img);
 
-        }
+    }
     private class AsyncJSON extends AsyncTask<Object, Long, JSONObject>{
         @Override
         protected void onPreExecute(){
@@ -58,7 +58,7 @@ public class AboutStudentActivity extends Activity {
 
 
         @Override
-        protected JSONObject doInBackground(Object[] params) {
+    protected JSONObject doInBackground(Object[] params) {
             JSONObject jsonArray = new JSONObject();
             HttpRequest request = HttpRequest.get("http://dev.tapptic.com/test/json.php?name="+name);
             if (request.code() == 200){
@@ -66,6 +66,7 @@ public class AboutStudentActivity extends Activity {
                 try {
                     jsonArray = new JSONObject(response);
                     text = jsonArray.getString("text");
+                    image = jsonArray.getString("image");
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -76,7 +77,8 @@ public class AboutStudentActivity extends Activity {
         }
         protected void onPostExecute(JSONObject  result){
             super.onPostExecute(result);
-                tvText.setText(text);
+            tvText.setText(text);
+            imageLoader.DisplayImage(image, img);
         }
 
     }
