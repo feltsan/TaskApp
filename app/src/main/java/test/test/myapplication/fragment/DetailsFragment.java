@@ -1,12 +1,14 @@
-package test.test.myapplication;
+package test.test.myapplication.fragment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,38 +17,37 @@ import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Constructor;
-
+import test.test.myapplication.R;
+import test.test.myapplication.ThirdLessonActivity;
 import test.test.myapplication.supp.ImageLoader;
 import test.test.myapplication.supp.TaskDataBase;
 
-
-public class AboutStudentActivity extends Activity {
-    String name;
-    String text;
-    String image;
+/**
+ * Created by john on 13.10.14.
+ */
+public class DetailsFragment extends Fragment {
+    String name, text, image;
     ImageView img;
     TaskDataBase dbHelper = null;
     SQLiteDatabase db = null;
     TextView tvText, tvFName;
-   ImageLoader imageLoader = new ImageLoader(this);
+    private View rootView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.about_student);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.about_student, container, false);
 
-        Intent intent = getIntent();
-        name = intent.getStringExtra("name");
+        name = "1";
 
         new AsyncJSON().execute();
 
-        img = (ImageView) findViewById(R.id.imageView);
-        tvText = (TextView) findViewById(R.id.text);
-        tvFName = (TextView) findViewById(R.id.name);
+        img = (ImageView) rootView.findViewById(R.id.imageView);
+        tvText = (TextView) rootView.findViewById(R.id.text);
+        tvFName = (TextView) rootView.findViewById(R.id.name);
 
-        dbHelper = new TaskDataBase(this);
+        dbHelper = new TaskDataBase(rootView.getContext());
         db = dbHelper.getWritableDatabase();
+        return rootView;
 
     }
 
@@ -72,7 +73,6 @@ public class AboutStudentActivity extends Activity {
                     cv.put(TaskDataBase.BIG_IMAGE, image);
                     db.update(TaskDataBase.TABLE_NAME, cv, "name = ?", new String[]{name});
 
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -84,6 +84,7 @@ public class AboutStudentActivity extends Activity {
 
         protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);
+            ImageLoader imageLoader = new ImageLoader(rootView.getContext());
             Cursor c = db.query(TaskDataBase.TABLE_NAME, new String[]{TaskDataBase.UID, TaskDataBase.NAME,
                     TaskDataBase.TEXT, TaskDataBase.SMALL_IMAGE, TaskDataBase.BIG_IMAGE}, "name = ?", new String[]{name}, null, null, null);
 

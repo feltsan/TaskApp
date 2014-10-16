@@ -9,7 +9,7 @@ import android.widget.Button;
 
 
 public class MyActivity extends Activity {
-    private Button button, button2;
+    private Button button, button2, button3;
     private int i;
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -25,6 +25,10 @@ public class MyActivity extends Activity {
                     intent = new Intent(MyActivity.this, ThirdLessonActivity.class);
                     startActivity(intent);
                     break;
+                case R.id.btn_3:
+                    intent = new Intent(MyActivity.this, DualOrientationFragmentActivity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }
@@ -37,8 +41,10 @@ public class MyActivity extends Activity {
         Log.v("Test", "onCreate");
         button = (Button) findViewById(R.id.btn_1);
         button2 = (Button) findViewById(R.id.btn_2);
+        button3 = (Button) findViewById(R.id.btn_3);
         button.setOnClickListener(onClickListener);
         button2.setOnClickListener(onClickListener);
+        button3.setOnClickListener(onClickListener);
         i = 1;
 
 

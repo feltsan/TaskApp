@@ -23,7 +23,7 @@ public class TaskDataBase extends SQLiteOpenHelper {
     public static final String BIG_IMAGE = "big_image";
 
 
-    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + TABLE_NAME + " (" + UID +
+    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + UID +
             " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME + " VARCHAR(255)," + TEXT + " VARCHAR(255),"
             + SMALL_IMAGE + " VARCHAR(255)," + BIG_IMAGE + " VARCHAR(255));";
 

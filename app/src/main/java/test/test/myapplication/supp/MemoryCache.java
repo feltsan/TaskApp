@@ -22,7 +22,7 @@ public class MemoryCache {
     private long size = 0;
 
     // Max memory in bytes
-    private long limit = 1000000;
+    private long limit = 100000000;
 
     public MemoryCache() {
         // Use 25% of available heap size

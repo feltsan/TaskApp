@@ -2,8 +2,6 @@ package test.test.myapplication.supp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,11 +76,18 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View arg0) {
 
-            resultp = data.get(position);
-            Intent intent = new Intent(context, AboutStudentActivity.class);
-            intent.putExtra("name", resultp.get(ThirdLessonActivity.KEY_NAME));
-            //intent.putExtra("image", resultp.get(ThirdLessonActivity.KEY_IMAGE));
-            context.startActivity(intent);
+                resultp = data.get(position);
+                Intent intent = new Intent(context, AboutStudentActivity.class);
+                intent.putExtra("name", resultp.get(ThirdLessonActivity.KEY_NAME));
+                //intent.putExtra("image", resultp.get(ThirdLessonActivity.KEY_IMAGE));
+//          //Bundle bundle = new Bundle();
+                //  bundle.putString("image", resultp.get(ThirdLessonActivity.KEY_NAME));
+//            DetailsFragment detal = new DetailsFragment();
+//            FragmentTransaction ft = detal.getFragmentManager().beginTransaction();
+//            ft.replace(R.id.fragment_place, detal);
+//            detal.setArguments(bundle);
+//            ft.commitAllowingStateLoss();
+                context.startActivity(intent);
 
             }
         });

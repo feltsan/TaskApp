@@ -1,6 +1,9 @@
 package test.test.myapplication;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -21,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import test.test.myapplication.fragment.DetailsFragment;
 import test.test.myapplication.supp.JSONFunctions;
 import test.test.myapplication.supp.ListViewAdapter;
 import test.test.myapplication.supp.Student;
@@ -37,8 +41,8 @@ public class ThirdLessonActivity extends Activity {
     private ArrayList<HashMap<String,String>> arrayList;
     private ListViewAdapter adapter;
     ProgressDialog mProgressDialog;
-    TaskDataBase dbHelper;
-    SQLiteDatabase db;
+    TaskDataBase dbHelper = null;
+    SQLiteDatabase db=null;
 
     public static final String KEY_NAME = "name";
     public static final String KEY_TEXT = "text";
@@ -47,14 +51,15 @@ public class ThirdLessonActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.listview_main);
-  //      new DownloadJSON().execute();
+
+        listView = (ListView) findViewById(R.id.listview);
+
         dbHelper = new TaskDataBase(this);
         db = dbHelper.getWritableDatabase();
+
         arrayList = new ArrayList<HashMap<String, String>>();
-
-
+//        new DownloadJSON().execute();
 
         // ContentValues cv = new ContentValues();
 
@@ -81,16 +86,18 @@ public class ThirdLessonActivity extends Activity {
         }else
             c.close();
 
-        listView = (ListView) findViewById(R.id.listview);
         adapter = new ListViewAdapter(ThirdLessonActivity.this, arrayList);
         listView.setAdapter(adapter);
-    //    db.delete("task_table", null, null);
-      //  dbHelper.close();
-      //  db.close();
+
+
+//        db.delete("task_table", null, null);
+//        db.close();
+//        dbHelper.close();
 
 
 
-//     mProgressDialog.dismiss();
+
+  //  mProgressDialog.dismiss();
     }
 
 //    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
@@ -119,7 +126,7 @@ public class ThirdLessonActivity extends Activity {
 //                   // map.put("image", jsonObject.getString("image"));
 //                    cv.put(TaskDataBase.SMALL_IMAGE, jsonObject.getString("image"));
 //                   // cv.put(TaskDataBase.BIG_IMAGE, jsonObject.getString("image"));
-//                        db.insert(TaskDataBase.TABLE_NAME, null, cv);
+//                       db.insert(TaskDataBase.TABLE_NAME, null, cv);
 //
 //
 //
